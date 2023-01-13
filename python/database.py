@@ -4,8 +4,8 @@ import mysql.connector
 
 mydb = mysql.connector.connect(
         host="localhost",
-        user="kali",
-        password="kali",
+        user="gigachad",
+        password="mdp",
         database="Formulaire"
 )
 
@@ -18,7 +18,4 @@ def main():
 
 
 
-
-
-if '__name__' == '__main__':
     main()
