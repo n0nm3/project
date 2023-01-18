@@ -218,7 +218,7 @@
             source: "A_black_image.jpg"
         FileChooserIconView:
             id: fc
-            filters: ["*.png","*.jpeg"]
+            filters: ["*.png","*.jpeg","*.jpg","*.webp"]
             on_selection: root.selectPhoto(fc.selection)
         Button:
             text: "Sélectionner"
@@ -444,6 +444,7 @@
                 on_text:
                     root.getSpinner()
                     root.chngdata()
+                    root.actualSpinner()
                     app.root.current = "bdres"
             Label:
                 text: " Si l'étudiant recherché n'apparait pas il faudra l'ajouter à l'aide du formulaire étudiant."
