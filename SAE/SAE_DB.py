@@ -96,8 +96,11 @@ def convertToBinaryData(filename):
     return blobData                                                      #revoie la variable
 
 #Le adduser avec la photo fonctionnel et les matières
-def Insert_stud(noms,annee,image, math, info, anglais):                                               
-    db = connect()                                                          #Lance la fonction pour se connecter à la bdd
+def Insert_stud(credentials,noms,annee,image, math, info, anglais):                                               
+    db = log(credentials)                                                   #Lance la fonction pour se connecter à la bdd
+    if db == "Error!":
+        err = "Error"
+        return err                                                          
     *noms, prenom = noms.split()                                            #transforme en chaine de charactère le nom et le sépare en 2 variable nom et prénom
     print(noms)
     nom = ""                                                                
@@ -129,7 +132,10 @@ def Insert_stud(noms,annee,image, math, info, anglais):
 
 #recuperation d'une photo depuis la bdd
 def Get_photo(etu):
-    db = connect()
+    db = log(credentials)                                                   #Lance la fonction pour se connecter à la bdd
+    if db == "Error!":
+        err = "Error"
+        return err     
     for element in Get_Users():
         if element != etu:
             pass
@@ -185,7 +191,10 @@ print(Get_Users())
 
 #permet d'obtenir tout les attributs d'un utilisateur de la table etudiant
 def Get_User(name):
-    db = connect()
+    db = log(credentials)                                                   #Lance la fonction pour se connecter à la bdd
+    if db == "Error!":
+        err = "Error"
+        return err     
     nom, prenom = name
     cursor = db.cursor()
     query = f'SELECT * FROM etudiant where nom="{nom}" AND prenom={prenom}'
@@ -199,8 +208,11 @@ def Get_User(name):
 
 
 #permet d'obtenir l'id d'un utilisateur de la table etudiant
-def Get_id(nom,prenom):
-    db = connect()
+def Get_id(credentials,nom,prenom):
+    db = log(credentials)                                                   #Lance la fonction pour se connecter à la bdd
+    if db == "Error!":
+        err = "Error"
+        return err     
     cursor = db.cursor()
     query = f'SELECT EtuID FROM etudiant where nom="{nom}" AND prenom="{prenom}"'
     cursor.execute(query)
@@ -212,8 +224,11 @@ def Get_id(nom,prenom):
 
 
 #fonction pour obtenir la moyenne d'un étudiant
-def Get_Moyennes(nom):
-    db = connect()
+def Get_Moyennes(creadentials,nom):
+    db = log(credentials)                                                   #Lance la fonction pour se connecter à la bdd
+    if db == "Error!":
+        err = "Error"
+        return err     
     cursor = db.cursor()
     id = Get_id(nom)
     query = f'SELECT moyenne_m FROM etudiant WHERE nom="{id}";'
