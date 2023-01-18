@@ -237,9 +237,3 @@ def Read_Blob(Nom):
     cursor.execute(query)
     picture = cursor.fetchall()
     return picture
-
-
-#print(Get_id('Test'))
-#print(Get_photo('Polo'))
-#print(Read_Blob('Test'))
-#Convert_png("puma",2000,None)
