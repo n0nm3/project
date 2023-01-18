@@ -102,16 +102,27 @@ class BD(Screen):
             global ele_Etu
             Etu = self.ids.spinner.text
             ele_Etu = DB.Get_photo(Etu)
-            print(Etu,ele_Etu)
         pass
 
+    def actualSpinner(self):
+        self.ids.spinner.values = DB.Get_Users()
+
     def chngdata(self):
+        print(Etu)
+        *noms, prenom = Etu.split()
+        print(prenom)
+        nom = ""
+        for element in noms:
+            nom += " " + str(element)
+        print(nom,prenom)
+        moyennes = DB.Get_Moyennes(nom,prenom)
         self.manager.get_screen("bdres").ids.Name.text = " "*12 + "{}".format(Etu)
         self.manager.get_screen("bdres").ids.Year.text =  str(ele_Etu[3])
-        self.manager.get_screen("bdres").ids.MeanM.text = "320"
-        self.manager.get_screen("bdres").ids.MeanI.text = "320"
-        self.manager.get_screen("bdres").ids.MeanA.text = "350"
+        self.manager.get_screen("bdres").ids.MeanM.text = str(moyennes[1])
+        self.manager.get_screen("bdres").ids.MeanI.text = str(moyennes[2])
+        self.manager.get_screen("bdres").ids.MeanA.text = str(moyennes[0])
         self.manager.get_screen("bdres").ids.Photo.source = ele_Etu[4]
+        print(Etu)
     
     def emptySpinner(self):
         self.ids.spinner.text = "Choisissez un étudiant parmi la liste"
@@ -139,6 +150,7 @@ class Submit(Screen):
     
     def restbckgrnd(self,x):
         self.ids['nav'+str(x)].background_color = "black"
+
 
 class BDres(Screen):
 
