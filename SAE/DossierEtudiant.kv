@@ -1,0 +1,395 @@
+#:kivy 1.11.0
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import Factory kivy.factory.Factory
+
+<MyScreenManager>:
+    transition: NoTransition()
+    Formulaire:
+        name: "formulaire"
+    BD:
+        name: "bd"
+    Aide:
+        name: "aide"
+    Submit:
+        name: "submit"
+    BDres:
+        name: "bdres"
+
+<Formulaire>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    canvas:
+        Color:
+            rgb: .1019, .5686, .5411
+        Line:
+            points: 25, 401, 15, 401, 15, 15, 15, 401, 15, 15, 785, 15, 785, 15, 785, 401, 785, 401, 210, 401
+            close: False
+    GridLayout:
+        cols:1
+        rows:2
+        GridLayout:
+            rows:2
+            cols:1
+            size_hint: 0.1,0.3
+            Button:
+                text: "Interroger la BD"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav1
+                on_press:
+                    root.chngbckgrnd(1)
+                on_release:
+                    root.restbckgrnd(1)
+                    app.root.current = "bd"
+            Button:
+                text: "Aide"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#00000"
+                id: nav2
+                on_press:
+                    root.chngbckgrnd(2)
+                on_release:
+                    root.restbckgrnd(2)
+                    app.root.current = "aide"
+        GridLayout:
+            rows:11
+            cols:1
+            padding:30
+            Label:
+                text: "Formulaire Etudiant"
+                color: "#1a918a"
+                font_size: "20sp"
+                text_size: self.size
+                halign: "left"
+            Label:
+                text: "Nom :"
+                font_size: "18sp"
+                color: "#1a918a"
+                text_size: self.size
+                halign: "left"
+            TextInput:
+                id: nom_input
+            Label:
+                text: "Année :"
+                font_size: "18sp"
+                color: "#1a918a"
+                text_size: self.size
+                halign: "left"
+            TextInput:
+                id: annee_input
+            Label:
+                text: "Moyenne :"
+                font_size: "18sp"
+                color: "#1a918a"
+                text_size: self.size
+                halign: "left"
+            TextInput:
+                id: moyenne_input
+            Label:
+                text: "Photo :"
+                font_size: "18sp"
+                color: "#1a918a"
+                text_size: self.size
+                halign: "left"
+            TextInput:
+                id: photo_input
+            Label:
+                size_hint: 0.5, 0.5
+            ToggleButton:
+                text: "Envoyer"
+                font_size: "18sp"
+                background_color: "#314959"
+                background_normal: "" 
+                size_hint: None, None
+                size: 100, 40
+                id: button
+                on_release:
+                    root.checkferrors()
+                    app.root.current = "submit"
+
+
+
+
+<Submit>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    GridLayout:
+        cols:1
+        rows:2
+        GridLayout:
+            rows:3
+            cols:1
+            size_hint: 0.1,0.3
+            Button:
+                text: "Retour au formulaire étudiant"
+                bold: True
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav1
+                on_press:
+                    root.chngbckgrnd(1)
+                on_release:
+                    root.restbckgrnd(1)
+                    app.root.current = "formulaire"
+            Button:
+                text: "Interroger la BD"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav2
+                on_press:
+                    root.chngbckgrnd(2)
+                on_release:
+                    root.restbckgrnd(2)
+                    app.root.current = "bd"
+            Button:
+                text: "Aide"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav3
+                on_press:
+                    root.chngbckgrnd(3)
+                on_release:
+                    root.restbckgrnd(3)
+                    app.root.current = "aide"
+        Label:
+            text: ""
+            color:"#00000"
+            id: response
+
+<BD>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    GridLayout:
+        cols:1
+        rows:2
+        GridLayout:
+            rows:2
+            cols:1
+            size_hint: 0.1,0.3
+            Button:
+                text: "Formulaire étudiant"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav1
+                on_press:
+                    root.chngbckgrnd(1)
+                on_release:
+                    root.restbckgrnd(1)
+                    app.root.current = "formulaire"
+            Button:
+                text: "Aide"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav2
+                on_press:
+                    root.chngbckgrnd(2)
+                on_release:
+                    root.restbckgrnd(2)
+                    app.root.current = "aide"
+        GridLayout:
+            rows:3
+            cols:1
+            padding: 10
+            Label:
+                text: " Liste des étudiants"
+                font_size: "18sp"
+                text_size: self.size
+                halign: "left"
+                valign: "middle"
+                color: "#000000"
+                size_hint: .2, .2
+            Spinner:
+                text: "Choisissiez un étudiant parmi la liste"
+                size_hint: None, None
+                size: 300, 50
+                pos_hint: {'center_x': 0.0,'center_y': 0.0}
+                background_color: "#9191a1"
+                option_cls: Factory.get("MySpinnerOption")
+                values: root.items
+                id: spinner
+                on_text:
+                    root.emptySpinner()
+                    app.root.current = "bdres"
+            Label:
+                text: " Si l'étudiant recherché n'apparait pas il faudra l'ajouter à l'aide du formulaire étudiant."
+                font_size: "15sp"
+                text_size: self.size
+                halign: "left"
+                valign: "middle"
+                color: "#000000"
+
+<Aide>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    GridLayout:
+        cols:1
+        rows:2
+        GridLayout:
+            rows:2
+            cols:1
+            size_hint: 0.1,0.3
+            Button:
+                text: "Formulaire étudiant"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav1
+                on_press:
+                    root.chngbckgrnd(1)
+                on_release:
+                    root.restbckgrnd(1)
+                    app.root.current = "formulaire"
+            Button:
+                text: "Interroger la BD"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav2
+                on_press:
+                    root.chngbckgrnd(2)
+                on_release:
+                    root.restbckgrnd(2)
+                    app.root.current = "bd"
+
+<BDres>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    GridLayout:
+        cols:1
+        rows:2
+        GridLayout:
+            rows:2
+            cols:1
+            size_hint: 0.1,0.3
+            Button:
+                text: "Formulaire étudiant"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav1
+                on_press:
+                    root.chngbckgrnd(1)
+                on_release:
+                    root.restbckgrnd(1)
+                    app.root.current = "formulaire"
+            Button:
+                text: "Aide"
+                font_size: "16sp"
+                background_normal: ""
+                background_down: ""
+                background_color: "#000000"
+                id: nav2
+                on_press:
+                    root.chngbckgrnd(2)
+                on_release:
+                    root.restbckgrnd(2)
+                    app.root.current = "aide"
+        GridLayout:
+            rows:10
+            cols:1
+            padding:10
+            Label:
+                text: "Nom :"
+                font_size: "18sp"
+                color: "#1a918a"
+                text_size: self.size
+                halign: "left"
+                valign: "top"
+                size_hint: 0.2, 0.2
+            Label:
+                text: root.Name
+                color: "black"
+                text_size: self.size
+                halign: "left"
+                valign: "top"
+                size_hint: 0.2, 0.2
+            Label:
+                text: "Année :"
+                font_size: "18sp"
+                color: "#1a918a"
+                text_size: self.size
+                halign: "left"
+                valign: "top"
+                size_hint: 0.2, 0.2
+            Label:
+                text: root.Year
+                color: "black"
+                text_size: self.size
+                halign: "left"
+                valign: "top"
+                size_hint: 0.2, 0.2
+            Label:
+                text: "Moyenne :"
+                font_size: "18sp"
+                color: "#1a918a"
+                text_size: self.size
+                halign: "left"
+                valign: "top"
+                size_hint: 0.2, 0.2
+            Label:
+                text: root.Mean
+                color: "black"
+                text_size: self.size
+                halign: "left"
+                valign: "top"
+                size_hint: 0.2, 0.2
+            Label:
+                text: "Photo :"
+                font_size: "18sp"
+                color: "#1a918a"
+                text_size: self.size
+                halign: "left"
+                valign: "top"
+                size_hint: 0.2, 0.2
+            AsyncImage:
+                source: root.Photo
+            ToggleButton:
+                text: "Retour à la bd"
+                font_size: "15sp"
+                background_color: "#314959"
+                background_normal: "" 
+                size_hint: None, None
+                size: 100, 40
+                on_release:
+                    app.root.current = "bd"
+            
+<MySpinnerOption@SpinnerOption>:
+    background_color: "#9191a1"
+    background_down: ""
