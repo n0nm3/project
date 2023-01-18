@@ -71,10 +71,6 @@ def create_tables(credentials):
     view = "CREATE VIEW Dos AS SELECT etudiant.EtuID, nom, prenom, annee, Moyenne_m/3+Moyenne_a/3+Moyenne_p/3 FROM etudiant,Anglais,Math,Programmation WHERE  Anglais.EtuID=Programmation.EtuID AND Anglais.EtuID=Math.EtuID AND etudiant.EtuID=Anglais.EtuID;"
     cursor.execute(view)
     db.commit()
-    #for element in open("eleve.txt",'r'):
-    #    print(element)
-    #for element in cursor:
-    #    print(element) 
     return cursor
 
 
@@ -92,9 +88,6 @@ def db_exist(credentials):
         create_tables(credentials)
     return len(r)
 
-#print(db_exist(("gigachad","mdp")))
-
-
 
 #Convertisseur d'image en binaire pour la photo de l'étudiant
 def convertToBinaryData(filename):                                       
@@ -102,15 +95,14 @@ def convertToBinaryData(filename):
         blobData = file.read()                                           #met le fichier binaire dans une variable
     return blobData                                                      #revoie la variable
 
-#Le adduser mais avec la photo fonctionnel
+#Le adduser avec la photo fonctionnel et les matières
 def Insert_stud(noms,annee,image, math, info, anglais):                                               
     db = connect()                                                          #Lance la fonction pour se connecter à la bdd
     *noms, prenom = noms.split()                                            #transforme en chaine de charactère le nom et le sépare en 2 variable nom et prénom
     print(noms)
     nom = ""                                                                
     for element in noms:                                                    #Récupérateur de nom pour eux ayant des espaces famille espacé
-        nom += " " + element
-    #nom, prenom = str(nom)                                                          
+        nom += " " + element                                                   
     cursor = db.cursor()                                                    #met le cursor dans la base de donnée
     if image != None:                                                       #si il y a une photo on la change en binaire 
         Photo = convertToBinaryData(image)                                  
@@ -154,7 +146,6 @@ def Get_photo(etu):
             cursor.execute(query)
             etu = cursor.fetchall()
             for element in etu:
-                print(element)
                 Etu_id = element[0]
                 nom = element[1]
                 prenom = element[2]
@@ -169,41 +160,6 @@ def Get_photo(etu):
                 r.pop()
                 r.append(dir_photo)
             return r
-
-
-#Exemple
-#----------------------------------------------------------------------
-#permet d'obtenir les tables (script de test)
-def Get_Tables():
-    db = connect()
-    cursor = db.cursor()
-    query = f'SHOW tables;'
-    cursor.execute(query)
-    print(cursor)
-    r = cursor.fetchall()
-    print(r)
-    db.close()
-#----------------------------------------------------------------------
-
-
-
-
-
-#permet d'obtenir tout les utilisateurs de la table etudiant
-#----------------------------------------------------------------------
-#def Get_Users():
-#    db = connect()
-#    cursor = db.cursor()
-#    query = f'SELECT nom FROM etudiant'
-#    cursor.execute(query)
-#    e = cursor.fetchall()
-#    db.close
-#    r = []
-#    for element in e:
-#        r.append(element[0])
-#    return r
-#----------------------------------------------------------------------
-
 
 
 #permet d'obtenir tout les utilisateurs(nom et prenom) de la table etudiant
@@ -262,8 +218,15 @@ def Get_Moyennes(nom):
     id = Get_id(nom)
     query = f'SELECT moyenne_m FROM etudiant WHERE nom="{id}";'
     cursor.execute(query)
-    picture = cursor.fetchall()
-    return 
+    moyenne_m = cursor.fetchall()
+    query = f'SELECT moyenne_m FROM etudiant WHERE nom="{id}";'
+    cursor.execute(query)
+    moyenne_p = cursor.fetchall()
+    query = f'SELECT moyenne_m FROM etudiant WHERE nom="{id}";'
+    cursor.execute(query)
+    moyenne_a =  cursor.fetchall()
+    moyennes = [moyenne_m[0],moyenne_p[0],moyenne_a[0]]
+    return moyennes
 
 
 #fonction permettant de lire un fichier blob(une photo) d'un étudiant 
